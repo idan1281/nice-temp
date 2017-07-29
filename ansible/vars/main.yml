@@ -1,0 +1,5 @@
+postgresql_databases:
+  - name: puppetdb
+postgresql_users:
+  - name: puppetdb
+    password: supersecure
