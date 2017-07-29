@@ -38,12 +38,12 @@
         },
         {
             "type": "ansible-local",
-            "playbook_file": "ansible-postgresql/ansible_playbook.yml",
-            "playbook_dir": "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql",
+            "playbook_file": "ansible-postgresql-on-el6/role.yml",
+            "playbook_dir": "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql-on-el6",
             "role_paths": [
-                "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql"
+                "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql-on-el6"
             ],
-            "host_vars": "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql/vars"
+            "host_vars": "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql-on-el6/vars"
            
         }
     ]

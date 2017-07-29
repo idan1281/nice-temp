@@ -1,2 +1,3 @@
 *.iso
 iso/*
+output-virtualbox-iso/*
