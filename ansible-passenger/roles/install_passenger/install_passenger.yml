@@ -1,0 +1,10 @@
+- name: Create a PostgreSQL DB server
+  hosts: localhost
+  become: yes
+  become_user: root
+  remote_user: root
+
+  roles:
+  - install_passenger 
+
+~

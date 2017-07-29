@@ -1,0 +1,27 @@
+---
+
+- name: Add el6 YUM rep
+  commane: sudo curl --fail -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
+
+- name: Install Passenger Nginx
+  command: sudo yum install -y nginx passenger || sudo yum-config-manager --enable cr && sudo yum install -y nginx passenger
+
+- name: setting up passenger_root
+  command: passenger-config --root | xargs echo "passenger_root" | awk '$0=$0";"' >>/etc/nginx/conf.d/passenger.conf
+
+- name: setting passenger_ruby
+  command: echo /usr/bun/ruby; >>/etc/nginx/conf.d/passenger.conf
+
+- name: setting passenger_instance_registry_dir
+  command: echo /var/run/passenger-instreg;  >> /etc/nginx/conf.d/passenger.conf
+
+# Restrt nginx service
+- service:
+    name: nginx
+    state: restarted
+
+# Validating the installtion
+- name: Validate Install
+  command: /usr/bin/passenger-config validate-install
+
+

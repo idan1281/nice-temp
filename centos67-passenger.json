@@ -1,0 +1,50 @@
+{
+    "variables": {
+        "iso": "iso/CentOS-6.7-x86_64-bin-DVD1.iso",
+        "checksum": "51f90e8ddd2ea199780065eaf75130ad"
+    },
+    "builders": [{
+        "type": "virtualbox-iso",
+        "iso_url": "{{ user `iso` }}",
+        "iso_checksum": "{{ user `checksum` }}",
+        "iso_checksum_type": "md5",
+        "vm_name": "MyCentOS67-Passenger",
+        "guest_os_type": "RedHat_64",
+        "ssh_username": "root",
+        "ssh_password": "packer",
+        "ssh_port": 22,
+        "ssh_wait_timeout": "1200s",
+        "vboxmanage": [
+            ["modifyvm", "{{.Name}}", "--memory", "2048"],
+            ["modifyvm", "{{.Name}}", "--cpus", "2"],
+            ["modifyvm", "{{.Name}}", "--audio", "none"]
+        ],
+        "disk_size": "102400",
+        "http_directory": "http",
+        "boot_command": [
+            "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+        ],
+        "shutdown_command": "/sbin/halt -p"
+    }],
+    "provisioners": [{
+            "type": "shell",
+            "scripts": [
+                "scripts/base.sh",
+                "scripts/virtualbox.sh",
+                "scripts/epel.sh",
+                "scripts/cleanup.sh",
+                "scripts/ansible.sh"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_file": "ansible-postgresql/ansible_playbook.yml",
+            "playbook_dir": "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql",
+            "role_paths": [
+                "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql"
+            ],
+            "host_vars": "/Users/c5240533/nice/Projects/PackerExample/ansible-postgresql/vars"
+           
+        }
+    ]
+}
